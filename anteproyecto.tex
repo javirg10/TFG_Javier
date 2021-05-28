@@ -1,0 +1,127 @@
+%Plantilla anteproyecto TFG
+%Última modificación: 28 de mayo de 2021
+\documentclass[12pt,oneside,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{subfigure}
+\usepackage{url}
+\linespread{1}
+\setlength{\parskip}{1\baselineskip}
+\parindent 1cm
+\sloppy
+
+
+%Opciones que debes descomentar mientras estemos revisando el anteproyecto
+\usepackage{lineno}
+\linenumbers
+
+
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=true]{hyperref}
+
+
+%lista de palabras que Latex no parte bien
+\hyphenation{pa-la-bras lis-ta}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\begin{large}
+Departamento de Teoría de la Señal y Comunicaciones\\
+Escuela Politécnica Superior\\
+\end{large}
+\vspace{1cm}
+
+\includegraphics[width=8cm]{figuras/logo-uah.pdf}
+
+\textbf{ANTEPROYECTO}
+
+\vspace{1cm}
+
+\begin{large}\textbf{\textit{Título del proyecto}}\end{large}
+
+\vfill
+
+Mayo - 2021
+
+\end{center}
+
+\begin{flushright}
+\textit{Autor - \textbf{Tu nombre}} \\
+\textit{Director - \textbf{El de tu director}}
+\end{flushright}
+
+\newpage
+
+\section{Introducción}
+
+Escribe una breve introducción para el anteproyecto, destacando:
+\begin{itemize}
+ \item el título del proyecto y el objetivo principal que persigues.
+ \item referencias a otros trabajos similares que encuentres en la literatura (y por supuesto en otros trabajos fin de grado del departamento).
+ \item Trata de responder a la pregunta: ¿qué voy a hacer?, NO ¿cómo lo voy a hacer? Los detalles sobre el cómo se van a hacer las cosas los daremos después.
+\end{itemize}
+
+\subsection{Estado del arte}
+En esta subsección es donde puedes hablar del resto de trabajos y poner tantas referencias como quieras (e.g. \cite{bibtex}).
+
+\section{Objetivos y campos de aplicación}
+Destaca los objetivos particulares, y también los campos de aplicación (haz una lista con las aplicaciones reales de tu trabajo).
+
+\section{Descripción del trabajo}
+Ahora si, ¿cómo vas a hacer las cosas? Describe las partes, módulos o fases de tu proyecto, y añade un diagrama de bloques. Comenta cada uno de ellos, para que el lector entienda lo que persigues.
+
+\section{Fases de desarrollo}
+Ahora debes detallar, de forma técnica, las fases de desarrollo. Te pongo un ejemplo.
+
+\begin{enumerate}
+\item Estudio de bibliografía y documentación sobre el problema de caza de pesca con gusano. Duración: 2 semanas.
+\item \ldots
+\item Edición del manual de usuario de la aplicación. Duración: 1 semana.
+\item Edición del documento final utilizando \LaTeX. Duración: 1 mes.
+\end{enumerate}
+
+\textcolor{red}{IMPORTANTE: debes indicar en cada item la duración de esa fase del proyecto}.
+
+\section{Medios disponibles}
+
+Describe los medios que vas a emplear para realizar el TFG: tipo de ordenador, software, SO, librerías, acceso a servidores de cálculo, plataformas robóticas concretas, bases de datos, etc.
+
+\section{Sobre \LaTeX}
+
+Si ya manejas \LaTeX no hace falta que leas esta sección.
+
+Necesitas aprender a manejar \LaTeX para escribir este anteproyecto y la memoria final del TFG. Verás que se trata de una herramienta estupenda para editar textos de forma profesional.
+
+La mejor manera de aprender es abrir un fichero \verb$.tex$ (por ejemplo el \verb$anteproyecto.tex$) y empezar a cambiar cosas en él y a compilarlo para generar un fichero \verb$.pdf$. Como editor te recomendamos TexMaker \cite{texmaker} (está en los repositorios de Ubuntu).
+
+Un página estupenda donde consultar dudas es la siguiente \cite{wikibook}.
+
+Ya has visto que las citas bibliográficas (referencias a páginas web, artículos, congresos y libros) debes ponerlas utilizando el comando \verb$\cite$.
+
+Toda la bibliografía debes tenerla en un fichero \verb$.bib$ (en este caso estamos utilizando el fichero \verb$bibliografia-tfc.bib$). Se trata de un fichero que tiene la bibliografía en formato BibTex \cite{bibtex}. Para gestionar este fichero te recomendamos utilizar el programa JabRef \cite{jabref}. Si abres con JabRef el fichero \verb$bibliografia-tfc.bib$ verás las referencias que hemos utilizado en esta plantilla de anteproyecto. Tienes referencias a páginas web (que debes poner como tipo MISC) \cite{bibtex,jabref,wikibook}, a artículos de congresos (tipo INPROCEEDINGS) \cite{Lowe1999}, a artículos en revistas (tipo ARTICLE) \cite{Tuytelaars2008} y a libros (tipo BOOK) \cite{hartley2006}.
+
+Como ves, \LaTeX se encarga de numerar las referencias y de generar la bibliografía a partir del fichero \verb$.bib$.
+
+También puedes poner imágenes, como la representada en la Figura \ref{fig:ejemplo}. Recuerda utilizar \textbf{SÓLO} el formato \verb$.pdf$ y compilar con pdflatex. Para generar figuras en formato \verb$.pdf$ te recomiendo utilizar el programa Inkscape\footnote{\url{http://www.inkscape.org/} -- también está en los repositorios de Ubuntu}. Por cierto, las notas a pie de página como ésta debes tratar de no utilizarlas en exceso cuando escribas tu proyecto.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=4cm]{figuras/logo-uah.pdf}
+  \caption{Un título que describa el contenido de la figura.}
+  \label{fig:ejemplo}
+\end{figure}
+
+
+%Bibliografía
+\bibliographystyle{plain}
+\bibliography{bibliografia-tfc}
+
+
+\end{document}

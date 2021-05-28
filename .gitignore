@@ -16,13 +16,8 @@
 *.dvi
 *.xdv
 *-converted-to.*
-# these rules might exclude image files for figures etc.
-# *.ps
-# *.eps
-# *.pdf
 
-## Generated if empty string is given at "Please type another file name for output:"
-.pdf
+anteproyecto.pdf
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
@@ -120,6 +115,7 @@ acs-*.bib
 
 # gregoriotex
 *.gaux
+*.glog
 *.gtex
 
 # htlatex
@@ -135,8 +131,8 @@ acs-*.bib
 
 # knitr
 *-concordance.tex
-# TODO Comment the next line if you want to keep your tikz graphics files
-*.tikz
+# TODO Uncomment the next line if you use knitr and want to ignore its generated tikz files
+# *.tikz
 *-tikzDictionary
 
 # listings
@@ -165,6 +161,9 @@ _minted*
 
 # morewrites
 *.mw
+
+# newpax
+*.newpax
 
 # nomencl
 *.nlg
@@ -274,3 +273,6 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# xwatermark package
+*.xwm
