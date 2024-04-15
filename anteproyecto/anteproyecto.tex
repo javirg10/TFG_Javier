@@ -14,6 +14,8 @@
 \usepackage{multirow}
 \usepackage{colortbl}
 \usepackage{rotating}
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks=true,linkcolor=black,bookmarks=true]{hyperref}
+
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 
@@ -90,7 +92,7 @@ Abril - 2024
 \section{Introducción}
 \hline
 
-El envejecimiento fisiológico eleva la incidencia de enfermedades y éstas repercuten en aspectos funcionales, lo que favorece la incapacidad. Se pretende detectar el decaimiento físico en sus etapas más tempranas para intentar retrasar el estado de fragilidad. Para ello se utiliza el Test de evaluación del desempeño físico (SPPB) del adulto mayor como ayuda a la valoración geriátrica integral. \\
+El envejecimiento fisiológico eleva la incidencia de enfermedades y éstas repercuten en aspectos funcionales, lo que favorece la incapacidad. Se pretende detectar el decaimiento físico en sus etapas más tempranas para intentar retrasar el estado de fragilidad. Para ello se utiliza el Test de evaluación del desempeño físico \cite{welch2021short} (SPPB) del adulto mayor como ayuda a la valoración geriátrica integral. \\
 El Test consiste en la realización de tres pruebas a cada uno de los pacientes. El protocolo de las pruebas es el siguiente: \\
 \begin{itemize}
 \item Prueba de equilibrio: Se debe aguantar 10 segundos en tres posiciones diferentes (pies juntos, semitándem y tándem), sin ningún tipo de apoyo. \\
@@ -107,14 +109,14 @@ A día de hoy estas pruebas se realizan de manera manual, de esta manera se cont
 Por otro lado, al obtener los datos de manera manual, la complejidad de recopilar la información en una base de datos, donde se pueda ver cada paciente y analizar cada prueba a lo largo del tiempo aumenta significativamente. 
 
 
-\section{Objetivos}
+\section{Objetivo}
 \hline
 Se pretende  facilitar, agilizar y mejorar la intervención médica con ayuda tecnológica. El proyecto pretende proporcionar herramientas que eliminen los errores que se pueden cometer al hacer las pruebas de manera manual y que no exijan amplios conocimientos técnicos, ayudando al equipo sanitario a tener un control sobre cada prueba realizada a cada paciente, así como una base de datos donde quede registrada toda la información necesaria.
 
 
 \section{Metodología}\index{Metodología} \\
 \hline
-La propuesta se compone de cuatro tareas fundamentales: 
+La propuesta se compone de tres tareas fundamentales: 
 
 \subsection{ANÁLISIS Y SELECCIÓN DE LA BASE DE DATOS ADECUADA}
 Existen diferentes tipos de bases de datos atendiendo a su estructura y al modelo de datos que utilizan. En este apartado se deberá hacer un análisis de qué tipos de datos vamos a tener y qué estructura es óptima para almacenarlos.
@@ -122,8 +124,10 @@ Existen diferentes tipos de bases de datos atendiendo a su estructura y al model
 \subsection{DESARROLLO DE APLICACIÓN MOVIL}
 Hoy en día está sumamente extendido el uso de Smartphones que tienen conexión a internet, Bluethooth y un alcance de procesamiento muy potente. Con esto se pretende desarrollar una aplicación que conectada con ........................ recoja los datos en crudo y haga todo el procesamiento, convirtiendo los datos en crudo en, finalmente, puntos SPPB. Este dispositivo deberá estar conectado a internet para, una vez terminada la prueba, subir la información a la base de datos, donde quedará registrada y estructurada.
 
-\subsection{Desarrollo de servidor web} 
-Se pretende desarrollar un servidor Web con una interfaz sencilla, cuyo objetivo sea recopilar la información de la base de datos y representarla para que el personal sanitario pueda hacer el análisis de las pruebas y llevar un control del histórico de sus pacientes.
+\subsection{DESARROLLO DE SERVIDOR WEB} 
+Se pretende desarrollar un servidor Web con una interfaz sencilla, cuyo objetivo sea recopilar la información de la base de datos y representarla para que el personal sanitario pueda hacer el análisis de las pruebas y llevar un control del histórico de sus pacientes. \\
+
+\hline
 
 \begin{figure}[H]
   \centering
@@ -155,14 +159,17 @@ Inicio                       & Análisis del funcionamiento del test SPPB       
 
 
 \section{Medios disponibles}
+\hline
 
-\begin{itemize}
-    \item Para la aplicación se hará uso de un teléfono móvil con sistema operativo Android versión 11 o superior. Este teléfono debe tener acceso a internet para poder comunicarse con la base de datos.
-     El desarrollo Android se hará usando el entorno de desarrollo nativo Android Studio. \\
+    \subsection{Aplicación móvil} Se hará uso de un teléfono móvil con sistema operativo Android versión 11 o superior. Este teléfono debe tener acceso a internet para poder comunicarse con la base de datos.
+     El desarrollo Android se hará usando el entorno de desarrollo nativo Android Studio \cite{hohensee2014introduccion}. \\
 
-    \item En cuanto a la web, se desarrollará con el lenguaje de programación Typescript, que trabaja sobre JavaScript y que permite añadir características estáticas de tipo, clases y módulos opcionales a JS. \\ 
-    Como entorno de desarrollo se utilizará Angular, framework que ofrece un conjunto de herramientas completo y potente, que puede ser ideal para el objetivo del proyecto.
-\end{itemize}
+    \subsection{Servidor web} En cuanto a la web, se desarrollará con el lenguaje de programación Typescript, que trabaja sobre JavaScript y que permite añadir características estáticas de tipo, clases y módulos opcionales a JS. \\ 
+    Como entorno de desarrollo se utilizará Angular \cite{wilken2018angular}, framework que ofrece un conjunto de herramientas completo y potente, que puede ser ideal para el objetivo del proyecto. \\
+
+    \subsection{Redacción de la memoria} Se utilizará Overleaf, una plataforma online para la edición y compilación de documentos escritos en el sistema de composición de textos \LaTeX \cite{wikibook}\\
+
+    \subsection{General} Se hará uso de un ordenador que tenga instalado el sistema operativo Windows y un mínimo de 8Gb de memoria RAM. Además, para llevar un control de versiones se utilizará el programa GitHub.
 
 
 
@@ -173,6 +180,7 @@ Inicio                       & Análisis del funcionamiento del test SPPB       
 \section{Referencias}
 
 \bibliography{bibliografia-tfc}
+\bibliographystyle{ieeetr}
 
 
 \end{document}
