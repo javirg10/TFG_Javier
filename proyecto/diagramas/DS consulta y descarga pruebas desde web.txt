@@ -1,0 +1,32 @@
+@startuml
+title Consulta y descarga de pruebas desde la web
+
+actor Facultativo
+actor Paciente
+participant "App Móvil (Android)" as App
+participant "Firebase" as Firebase
+participant "App Web (Angular)" as Web
+
+== Realización de la prueba ==
+Facultativo -> App : Realizar prueba física (SPPB)
+App -> Firebase : Guardar resultados procesados
+Firebase --> App : Confirmación de guardado
+
+== Consulta desde la web - Facultativo ==
+Facultativo -> Web : Iniciar sesión
+Web -> Firebase : Solicitar datos de pruebas del paciente
+Firebase --> Web : Devolver datos
+Web -> Facultativo : Mostrar datos
+
+== Consulta desde la web - Paciente ==
+Paciente -> Web : Iniciar sesión
+Web -> Firebase : Solicitar sus propios resultados
+Firebase --> Web : Devolver datos
+Web -> Paciente : Mostrar resultados
+
+== Descarga de datos ==
+Facultativo -> Web : Solicitar descarga en Excel
+Web -> Firebase : Solicitar datos
+Firebase --> Web : Enviar datos
+Web -> Facultativo : Generar y entregar archivo Excel
+@enduml

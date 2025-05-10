@@ -1,0 +1,32 @@
+@startuml
+title Gestión de roles de usuario desde la aplicación web
+
+actor Facultativo
+actor Administrador
+participant "App Web (Angular)" as Web
+participant "Firebase" as Firebase
+
+== Registro inicial ==
+Facultativo -> Web : Registrarse como nuevo usuario
+Web -> Firebase : Crear usuario con rol "no-role"
+Firebase --> Web : Confirmación de creación
+
+== Gestión de roles ==
+Administrador -> Web : Acceder a la gestión de usuarios
+Web -> Firebase : Obtener lista de usuarios y sus roles
+Firebase --> Web : Devolver datos de usuarios
+Administrador -> Web : Asignar rol "user" al facultativo
+Web -> Firebase : Actualizar rol del usuario
+Firebase --> Web : Confirmación de actualización
+
+== Inicio de sesión validado ==
+Facultativo -> Web : Iniciar sesión
+Web -> Firebase : Verificar credenciales y consultar rol
+alt Rol válido ("user")
+    Firebase --> Web : Autenticación y acceso concedido
+    Web -> Facultativo : Mostrar interfaz de usuario
+else Rol no válido ("no-role")
+    Firebase --> Web : Acceso denegado
+    Web -> Facultativo : Mostrar mensaje de acceso restringido
+end
+@enduml

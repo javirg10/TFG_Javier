@@ -1,0 +1,27 @@
+@startuml
+title Flujo Genérico de Realización de Prueba SPPB
+
+actor Profesional
+participant "App Móvil (Android)" as App
+participant "Dispositivo Bluetooth" as Sensor
+participant "Firebase" as Firebase
+
+== Inicio ==
+Profesional -> App : Iniciar prueba (SPPB)
+
+== Conexión con dispositivo ==
+App -> Sensor : Solicitar conexión
+alt Conexión exitosa
+    Sensor --> App : Confirmación de conexión
+
+    == Recepción de datos y procesamiento ==
+    loop Mientras la prueba esté activa
+        Sensor -> App : Enviar datos crudos
+        App -> App : Procesar datos según tipo de prueba
+    end
+
+    == Finalización de prueba ==
+    App -> Firebase : Guardar resultados procesados
+    Firebase --> App : Confirmación de guardado
+
+end
