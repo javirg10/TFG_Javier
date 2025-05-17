@@ -1,0 +1,34 @@
+@startuml
+autonumber
+actor Paciente
+actor Facultativo
+actor Administrador
+participant Web 
+participant Firebase 
+
+== Inicio de sesión del Paciente ==
+Paciente -> Web : Introduce DNI y Apellido
+Web -> Firebase : Buscar paciente por DNI y Apellido
+Firebase --> Web : Resultado (coincide / no coincide)
+alt Usuario válido
+    Web --> Paciente : Acceso concedido
+else Usuario no válido
+    Web --> Paciente : Acceso denegado
+end
+
+== Registro y login del Facultativo ==
+Facultativo -> Web : Registro
+Web -> Firebase : Crear cuenta con rol 'no-role'
+Firebase --> Web : Confirmación de registro
+
+Administrador -> Firebase : Cambiar rol de usuario a 'facultativo'
+
+Facultativo -> Web : Introduce username y contraseña
+Web -> Firebase : Validar credenciales
+Firebase --> Web : Credenciales válidas / inválidas + rol
+alt Rol válido (facultativo o administrador)
+    Web --> Facultativo : Acceso concedido
+else Rol 'no-role' o credenciales inválidas
+    Web --> Facultativo : Acceso denegado
+end
+@enduml

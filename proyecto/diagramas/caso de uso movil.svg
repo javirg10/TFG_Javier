@@ -9,6 +9,9 @@
    id="svg26994"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="caso de uso movil.svg"
+   inkscape:export-filename="CU movil.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -24,17 +27,36 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="4.7572176"
-     inkscape:cx="464.66237"
-     inkscape:cy="675.4999"
-     inkscape:window-width="2400"
-     inkscape:window-height="1261"
-     inkscape:window-x="2391"
-     inkscape:window-y="-9"
+     inkscape:zoom="1.1893044"
+     inkscape:cx="441.01409"
+     inkscape:cy="441.43451"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs26991">
+    <marker
+       style="overflow:visible"
+       id="TriangleStart"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
     <marker
        style="overflow:visible"
        id="marker14820-5-2-1-0-9"
@@ -137,9 +159,13 @@
      id="layer1">
     <g
        id="g436-2-9"
-       transform="matrix(0.0730785,0,0,0.0652112,99.94064,183.96562)">
+       transform="matrix(0.33118535,0,0,0.29553144,0.78232704,71.209873)"
+       inkscape:export-filename="CU movil.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
       <g
-         id="g427-6-6">
+         id="g427-6-6"
+         transform="translate(-1.1403263e-5)">
         <line
            x1="50"
            y1="65"
@@ -177,26 +203,35 @@
            id="line392-6-7" />
       </g>
     </g>
+    <rect
+       style="fill:#bdddb5;fill-opacity:1;stroke:#17572c;stroke-width:0.358327;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect17438"
+       width="162.34053"
+       height="107.53909"
+       x="40.779797"
+       y="48.131474"
+       ry="0"
+       inkscape:label="rect17438" />
     <ellipse
-       cx="103.59457"
-       cy="187.22617"
+       cx="17.3416"
+       cy="85.986382"
        stroke="#000000"
        fill="#ffffff"
        id="circle382-1-0"
-       rx="1.0961775"
-       ry="0.97816801"
-       style="stroke-width:0.069033" />
+       rx="4.9677801"
+       ry="4.4329715"
+       style="stroke-width:0.312851" />
     <text
-       x="107.20216"
-       y="182.80594"
+       x="6.344811"
+       y="109.44163"
        font-family="Arial"
-       font-size="1.00141px"
+       font-size="4.5383px"
        id="text398-11-1-6"
-       style="stroke-width:0.071529"
-       transform="scale(0.94296788,1.0604815)">Fecultativo</text>
+       style="stroke-width:0.324163"
+       transform="scale(0.94296788,1.0604815)">Facultativo</text>
     <g
        id="g11147-1-8"
-       transform="matrix(0.26458333,0,0,0.26458333,48.224569,159.18512)">
+       transform="matrix(1.1990685,0,0,1.1990685,-233.59036,-41.093178)">
       <ellipse
          cx="266.55386"
          cy="126.43204"
@@ -227,7 +262,7 @@
     </g>
     <g
        id="g11111-3-1"
-       transform="matrix(0.26458333,0,0,0.26458333,48.224569,159.40097)">
+       transform="matrix(1.1990685,0,0,1.1990685,-234.09447,-40.114963)">
       <ellipse
          cx="266.55386"
          cy="106.85791"
@@ -261,126 +296,137 @@
            style="text-align:center;text-anchor:middle">paciente</tspan></text>
     </g>
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.136525;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-1-0-9);paint-order:markers fill stroke"
-       d="m 111.91934,187.71494 h 3.10892"
+       style="fill:none;stroke:#000000;stroke-width:0.618719;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-1-0-9);paint-order:markers fill stroke"
+       d="M 55.068745,88.201462 H 69.158097"
        id="path14774-4-1-9-78-9" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.133457;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-       d="m 105.96543,190.14765 h 5.86394"
+       style="fill:none;stroke:#000000;stroke-width:0.604816;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       d="M 28.086146,99.226291 H 54.661008"
        id="path14774-4-1-9-78-9-9" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.13784792;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-5-4-7);paint-order:markers fill stroke"
-       d="m 111.9408,192.60974 h 3.16053"
+       style="fill:none;stroke:#000000;stroke-width:0.624715;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-5-4-7);paint-order:markers fill stroke"
+       d="M 55.165999,110.38427 H 69.489244"
        id="path14774-4-1-1-2-3" />
-    <g
-       id="g11147-1-5"
-       transform="matrix(0.26458333,0,0,0.26458333,65.276026,159.07263)">
-      <ellipse
-         cx="266.55386"
-         cy="126.43204"
-         rx="11.686088"
-         ry="8.1879959"
-         stroke="#000000"
-         fill="#ffffff"
-         id="ellipse396-7-0-4-9-1-2"
-         style="stroke-width:0.178592" />
-      <text
+    <ellipse
+       cx="164.12079"
+       cy="88.080986"
+       rx="14.825377"
+       ry="10.387576"
+       stroke="#000000"
+       fill="#ffffff"
+       id="ellipse396-7-0-4-9-8-6-4-7"
+       style="stroke-width:0.226568" />
+    <text
+       x="178.99078"
+       y="174.95595"
+       font-family="Arial"
+       font-size="5.2943px"
+       id="text398-6-1-6-6-4-6-5-5"
+       style="white-space:pre;inline-size:0;stroke-width:0.378164"
+       transform="matrix(0.80831371,0,0,0.90904661,19.710675,-72.632295)"><tspan
+         id="tspan735-8-4-7-2-6-0-2"
          x="178.99078"
          y="174.95595"
-         font-family="Arial"
-         font-size="5.2943px"
-         id="text398-6-1-6-6-1-3"
-         style="white-space:pre;inline-size:0;stroke-width:0.378164"
-         transform="matrix(0.67411809,0,0,0.75812741,145.9609,-7.8552577)"><tspan
-           id="tspan735-8-4-7-3-3"
-           x="178.99078"
-           y="174.95595"
-           style="text-align:center;text-anchor:middle">Hacer prueba
-velocidad</tspan><tspan
-           id="tspan737-6-9-5-6-7"
-           x="178.99078"
-           y="181.57382"
-           style="text-align:center;text-anchor:middle" /></text>
-    </g>
-    <g
-       id="g11182-9-9"
-       transform="matrix(0.26458333,0,0,0.26458333,65.276026,159.25918)">
-      <ellipse
-         cx="266.55386"
-         cy="144.48529"
-         rx="11.686088"
-         ry="8.1879959"
-         stroke="#000000"
-         fill="#ffffff"
-         id="ellipse396-7-0-4-9-8-9-7"
-         style="stroke-width:0.178592" />
-      <text
-         x="178.99078"
-         y="174.95595"
-         font-family="Arial"
-         font-size="5.2943px"
-         id="text398-6-1-6-6-4-1-6"
-         style="white-space:pre;inline-size:0;stroke-width:0.378164"
-         transform="matrix(0.67411809,0,0,0.75812741,145.9609,10.198004)"><tspan
-           id="tspan735-8-4-7-2-7-4"
-           x="178.99078"
-           y="174.95595"
-           style="text-align:center;text-anchor:middle">Hacer prueba
-sentadillas</tspan></text>
-    </g>
-    <g
-       id="g11111-3-7"
-       transform="matrix(0.26458333,0,0,0.26458333,65.276026,159.28848)">
-      <ellipse
-         cx="266.55386"
-         cy="106.85791"
-         rx="11.686088"
-         ry="8.1879959"
-         stroke="#000000"
-         fill="#ffffff"
-         id="ellipse396-7-0-4-9-8-6-4-7"
-         style="stroke-width:0.178592" />
-      <text
-         x="178.99078"
-         y="174.95595"
-         font-family="Arial"
-         font-size="5.2943px"
-         id="text398-6-1-6-6-4-6-5-5"
-         style="white-space:pre;inline-size:0;stroke-width:0.378164"
-         transform="matrix(0.67411809,0,0,0.75812741,145.9609,-27.429396)"><tspan
-           id="tspan735-8-4-7-2-6-0-2"
-           x="178.99078"
-           y="174.95595"
-           style="text-align:center;text-anchor:middle">Hacer prueba
+         style="text-align:center;text-anchor:middle">Hacer prueba
 equilibrio</tspan></text>
-    </g>
+    <text
+       x="178.99078"
+       y="174.95595"
+       font-family="Arial"
+       font-size="5.2943px"
+       id="text398-6-1-6-6-4-6-5-5-5"
+       style="font-size:11.1905px;line-height:0;white-space:pre;inline-size:0;stroke-width:0.378164"
+       transform="matrix(0.80831371,0,0,0.90904661,-19.442282,-97.404361)"><tspan
+         id="tspan735-8-4-7-2-6-0-2-6"
+         x="178.99078"
+         y="174.95595"
+         style="font-size:11.1905px;text-align:center;text-anchor:middle">SISTEMA</tspan></text>
+    <text
+       x="178.99078"
+       y="174.95595"
+       font-family="Arial"
+       font-size="5.2943px"
+       id="text398-6-1-6-6-4-6-5-5-2"
+       style="white-space:pre;inline-size:0;stroke-width:0.378164"
+       transform="matrix(0.6773948,0,0,0.76181245,-9.4928862,-47.420452)"><tspan
+         id="tspan735-8-4-7-2-6-0-2-1"
+         x="178.99078"
+         y="174.95595"
+         style="text-align:center;text-anchor:middle">&lt;&lt;extend&gt;&gt;</tspan></text>
+    <ellipse
+       cx="164.12839"
+       cy="110.0995"
+       rx="14.825377"
+       ry="10.387576"
+       stroke="#000000"
+       fill="#ffffff"
+       id="ellipse396-7-0-4-9-8-6-4-7-9"
+       style="stroke-width:0.226568" />
+    <text
+       x="178.99078"
+       y="174.95595"
+       font-family="Arial"
+       font-size="5.2943px"
+       id="text398-6-1-6-6-4-6-5-5-6"
+       style="white-space:pre;inline-size:0;stroke-width:0.378164"
+       transform="matrix(0.80831371,0,0,0.90904661,19.718287,-50.613818)"><tspan
+         id="tspan735-8-4-7-2-6-0-2-3"
+         x="178.99078"
+         y="174.95595"
+         style="text-align:center;text-anchor:middle">Hacer prueba
+sentadillas</tspan></text>
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.163062;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-1-0-92);paint-order:markers fill stroke"
-       d="m 128.99047,187.62211 h 3.10892"
+       style="fill:none;stroke:#000000;stroke-width:0.738983;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-1-0-92);paint-order:markers fill stroke"
+       d="m 132.43361,87.780765 h 14.08935"
        id="path14774-4-1-9-78-6" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.140303;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-5-4-0);paint-order:markers fill stroke"
-       d="m 121.96235,192.5759 h 10.20968"
+       style="fill:none;stroke:#000000;stroke-width:0.635841;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-5-4-0);paint-order:markers fill stroke"
+       d="m 100.58279,110.2309 h 46.26937"
        id="path14774-4-1-1-2-8" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.13734;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-       d="m 128.99591,187.6748 v 9.78294"
+       style="fill:none;stroke:#000000;stroke-width:0.622412;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       d="M 132.45826,88.019552 V 132.35498"
        id="path14774-4-1-1-2-8-6" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.132292;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-       d="m 111.90591,187.7793 v 4.82517"
+       style="fill:none;stroke:#000000;stroke-width:0.599537;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       d="M 55.00788,88.493136 V 110.36038"
        id="path14774-4-1-1-2-8-6-4" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.13229167;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:0.13229167,0.26458335;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-       d="m 125.07588,187.48852 h -3.15254"
+       style="fill:none;stroke:#000000;stroke-width:0.608789;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:0.608789, 1.21758;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       d="M 114.6831,87.175347 H 99.951527"
        id="path14774-4-1-9-78-6-5" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.13229167;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:0.13229167,0.26458335;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
-       d="m 125.07037,187.51551 v 5.01058"
+       style="fill:none;stroke:#000000;stroke-width:0.571841;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:0.571841, 1.14368;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart);paint-order:markers fill stroke"
+       d="M 114.66806,87.270607 V 107.92884"
        id="path14774-4-1-1-2-8-6-9" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.163062;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-17-1-0);paint-order:markers fill stroke"
-       d="m 129.03382,197.45638 h 3.10892"
+       style="fill:none;stroke:#000000;stroke-width:0.738983;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:3.8;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker14820-5-2-17-1-0);paint-order:markers fill stroke"
+       d="m 132.63005,132.34882 h 14.08938"
        id="path14774-4-1-4-4-1" />
+    <ellipse
+       cx="164.25438"
+       cy="131.90208"
+       rx="14.825377"
+       ry="10.387576"
+       stroke="#000000"
+       fill="#ffffff"
+       id="ellipse396-7-0-4-9-8-6-4-7-3"
+       style="stroke-width:0.226568" />
+    <text
+       x="178.99078"
+       y="174.95595"
+       font-family="Arial"
+       font-size="5.2943px"
+       id="text398-6-1-6-6-4-6-5-5-8"
+       style="white-space:pre;inline-size:0;stroke-width:0.378164"
+       transform="matrix(0.80831371,0,0,0.90904661,19.84432,-28.811242)"><tspan
+         id="tspan735-8-4-7-2-6-0-2-8"
+         x="178.99078"
+         y="174.95595"
+         style="text-align:center;text-anchor:middle">Hacer prueba
+velocidad</tspan></text>
+    <g
+       id="g436"
+       transform="matrix(0.0730785,0,0,0.0652112,98.120226,195.08804)" />
   </g>
 </svg>
