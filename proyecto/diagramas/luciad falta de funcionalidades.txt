@@ -1,0 +1,20 @@
+- Servicio de simbología
+	-Obtener SVG de símbolo introduciendo código de símbolo
+	-Obtener metadata de símbolo introduciendo código de símbolo
+- SceneMode: Opción de pasar de 3D a 2D y viceversa
+- Layers
+	- Soporte para GisWMSLayer
+	- Método para mostrar/ocultar capas
+	- Método para mostrar/ocultar entidades
+	- Reemplazo automático de capas existentes (si se crea una capa con el mismo ID, se elimina la que ya estaba)
+
+- Entidades
+	- Persistencia de entidades en localStorage (saveEntities y loadEntities)
+	- Gestión de entidades duplicadas (removeDuplicates)
+	- Visualización de línea dinámica al crear polilíneas y shapes
+	- Eliminación de entidades temporales
+	- Habilitar click derecho para terminar de pintar
+	- Habilitar flag en el método de creación de entidad para que el dibujo no quede sobre el mapa al terminar de pintar
+- Servicio de información: obtener la posición del ratón en coordenadas
+- Habilitar control táctil
+
