@@ -1,0 +1,641 @@
+import { Injectable } from '@angular/core';
+import {
+  CciGisMap,
+  GisBaseLayer,
+  GisBaseLayerBuilder,
+  GisDrawEntity,
+  GisDrawEntityBuilder,
+  GisEntity,
+  GisEntityLayer,
+  GisEntityLayerBuilder,
+  GisGridLayer,
+  GisGridLayerBuilder,
+  GisLayer,
+  GisPointEntity,
+  GisPointEntityBuilder,
+  GisPolylineEntity,
+  GisPolylineEntityBuilder,
+  GisShapeEntity,
+  GisShapeEntityBuilder,
+  GisSymbolEntity,
+  GisSymbolEntityBuilder,
+  GisSymbolLayer,
+  GisSymbolLayerBuilder,
+  GisWMSLayer,
+  GisWMSLayerBuilder,
+  InternalLayerService,
+} from '@c2i/gis-web';
+import * as Cesium from 'cesium';
+import ms from 'milsymbol';
+import { Observable } from 'rxjs';
+import { CustomImageryLayer } from '../custom/custom-imagery-layer';
+import { CesiumConstantPositionPropertyFactory } from '../factory/entities/cesium-constant-position-property.factory';
+import { CesiumConstantPositionsPropertyFactory } from '../factory/entities/cesium-constant-positions-property.factory';
+import { CesiumDrawBillBoardGraphicsFactory } from '../factory/entities/cesium-draw-billboard-graphics.factory';
+import { CesiumDrawEntityFactory } from '../factory/entities/cesium-draw-entity.factory';
+import { CesiumPointEntityFactory } from '../factory/entities/cesium-point-entity.factory';
+import { CesiumPolygonHierarchyFactory } from '../factory/entities/cesium-polygon-hierarchy.factory';
+import { CesiumPolylineEntityFactory } from '../factory/entities/cesium-polyline-entity.factory';
+import { CesiumShapeEntityFactory } from '../factory/entities/cesium-shape-entity.factory';
+import { CesiumSymbolBillboardGraphicsFactory } from '../factory/entities/cesium-symbol-billboard-graphics.factory';
+import { CesiumSymbolEntityFactory } from '../factory/entities/cesium-symbol-entity.factory';
+import { CesiumCustomDataSourceFactory } from '../factory/layers/cesium-custom-datasource.factory';
+import { CesiumGridDatasourceFactory } from '../factory/layers/cesium-grid-datasource.factory';
+import { CesiumUrlTemplateImageryLayerFactory } from '../factory/layers/cesium-url-template-imagery-layer.factory';
+import { CesiumWMSImageryLayerFactory } from '../factory/layers/cesium-wms-imagery-layer.factory';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CesiumLayerService extends InternalLayerService {
+  addLayer(map: CciGisMap, layer: GisLayer): Observable<any> {
+    return new Observable<any>((observer) => {
+      let layerObservable: Observable<any>;
+      if (layer instanceof GisWMSLayer) {
+        layerObservable = this.putGisWMSLayer(map, layer);
+      } else if (layer instanceof GisBaseLayer) {
+        layerObservable = this.putGisBaseLayer(map, layer);
+      } else if (layer instanceof GisEntityLayer) {
+        layerObservable = this.putGisEntityLayer(map, layer);
+      } else if (layer instanceof GisGridLayer) {
+        layerObservable = this.putGisGridLayer(map, layer);
+      } else if (layer instanceof GisSymbolLayer) {
+        layerObservable = this.putGisSymbolLayer(map, layer);
+      } else {
+        observer.error('Not a valid layer');
+      }
+      layerObservable!.subscribe({
+        next: (result) => observer.next(result),
+        error: (err) => observer.error(err),
+        complete: () => observer.complete(),
+      });
+    });
+  }
+
+  addEntity(
+    map: CciGisMap,
+    layer: GisLayer,
+    entity: GisEntity
+  ): Observable<any> {
+    return new Observable<any>((observer) => {
+      if (!layer.id) {
+        observer.error('Layer does not exist');
+        return;
+      }
+
+      if (
+        !(layer instanceof GisEntityLayer) &&
+        !(layer instanceof GisSymbolLayer)
+      ) {
+        observer.error('Layer is not a valid type');
+        return;
+      }
+
+      if (
+        (entity instanceof GisSymbolEntity &&
+          !(layer instanceof GisSymbolLayer)) ||
+        (!(entity instanceof GisSymbolEntity) &&
+          !(layer instanceof GisEntityLayer))
+      ) {
+        observer.error('Entity type does not match layer type');
+        return;
+      }
+
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+      const dataSource: Cesium.DataSource = viewer.dataSources.getByName(
+        layer.id
+      )[0];
+
+      if (!dataSource) {
+        observer.error('Layer not present in map');
+        return;
+      }
+
+      let entityObservable: Observable<any>;
+
+      if (entity instanceof GisSymbolEntity) {
+        entityObservable = this.putGisSymbolEntity(dataSource, entity);
+      } else if (entity instanceof GisDrawEntity) {
+        entityObservable = this.putGisDrawEntity(dataSource, entity);
+      } else if (entity instanceof GisPointEntity) {
+        entityObservable = this.putGisPointEntity(dataSource, entity);
+      } else if (entity instanceof GisPolylineEntity) {
+        entityObservable = this.putGisPolylineEntity(dataSource, entity);
+      } else if (entity instanceof GisShapeEntity) {
+        entityObservable = this.putGisShapeEntity(dataSource, entity);
+      } else {
+        observer.error('Unsupported entity type');
+        return;
+      }
+
+      entityObservable.subscribe({
+        next: (resultEntity) => {
+          if (layer instanceof GisEntityLayer && 'entities' in layer) {
+            layer.entities.push(resultEntity);
+          } else if (layer instanceof GisSymbolLayer && 'symbols' in layer) {
+            layer.symbols.push(resultEntity);
+          }
+
+          observer.next(resultEntity);
+        },
+        error: (err) => observer.error(err),
+        complete: () => observer.complete(),
+      });
+    });
+  }
+
+  removeLayer(map: CciGisMap, layer: GisLayer): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      if (!layer.id) {
+        observer.error('Layer does not exist');
+        return;
+      }
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+
+      if (layer instanceof GisBaseLayer) {
+        for (let i = 0; i < viewer.imageryLayers.length; i++) {
+          const currentImageryLayer = viewer.imageryLayers.get(
+            i
+          ) as CustomImageryLayer;
+
+          if (currentImageryLayer.id == layer.id) {
+            observer.next(viewer.imageryLayers.remove(currentImageryLayer));
+            observer.complete();
+            break;
+          }
+        }
+      } else if (
+        layer instanceof GisEntityLayer ||
+        layer instanceof GisGridLayer ||
+        layer instanceof GisSymbolLayer
+      ) {
+        const dataSource = viewer.dataSources.getByName(layer.id)[0];
+        if (!dataSource) {
+          observer.error('Layer already not present in map');
+          return;
+        }
+        observer.next(viewer.dataSources.remove(dataSource));
+        observer.complete();
+      }
+    });
+  }
+
+  removeEntity(
+    map: CciGisMap,
+    gisLayer: GisLayer,
+    gisEntity: GisEntity
+  ): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      if (!gisLayer.id) {
+        observer.error('Layer does not exist');
+        return;
+      }
+
+      if (
+        !(
+          gisLayer instanceof GisEntityLayer ||
+          gisLayer instanceof GisSymbolLayer
+        )
+      ) {
+        observer.error('Layer  is not a GisEntityLayer or a GisSymbolLayer');
+        return;
+      }
+
+      if (!gisEntity.id) {
+        observer.error('Entity does not exist');
+        return;
+      }
+
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+      const dataSource: Cesium.DataSource = viewer.dataSources.getByName(
+        gisLayer.id
+      )[0];
+
+      if (!dataSource) {
+        observer.error('Layer not present in map');
+        return;
+      }
+
+      const cesiumEntity = dataSource.entities.getById(gisEntity.id);
+      if (!cesiumEntity) {
+        observer.error('Entity already not present on this layer');
+        return;
+      }
+
+      observer.next(dataSource.entities.remove(cesiumEntity));
+      observer.complete();
+    });
+  }
+
+  private putGisWMSLayer(
+    map: CciGisMap,
+    gisLayer: GisWMSLayer
+  ): Observable<GisWMSLayer> {
+    return new Observable<GisWMSLayer>((observer) => {
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+
+      if (!gisLayer.id) {
+        const imageryLayer = CesiumWMSImageryLayerFactory.getWMSImageryLayer(
+          gisLayer.uri,
+          gisLayer.layers,
+          gisLayer.version,
+          gisLayer.format
+        );
+
+        viewer.imageryLayers.add(imageryLayer);
+
+        observer.next(
+          new GisWMSLayerBuilder(
+            gisLayer.uri,
+            gisLayer.version,
+            gisLayer.layers,
+            gisLayer.format
+          )
+            .withStyles(gisLayer.styles)
+            .withCrs(gisLayer.crs)
+            .withBbox(gisLayer.bbox)
+            .withWidth(gisLayer.width)
+            .withHeight(gisLayer.height)
+            .withId(imageryLayer.id)
+            .withMetadata(gisLayer.metadata)
+            .build()
+        );
+        observer.complete();
+      } else {
+        for (let i = 0; i < viewer.imageryLayers.length; i++) {
+          const currentImageryLayer = viewer.imageryLayers.get(
+            i
+          ) as CustomImageryLayer;
+
+          if (currentImageryLayer.id == gisLayer.id) {
+            viewer.imageryLayers.remove(currentImageryLayer);
+            break;
+          }
+        }
+
+        const imageryLayer = CesiumWMSImageryLayerFactory.getWMSImageryLayer(
+          gisLayer.uri,
+          gisLayer.layers,
+          gisLayer.version,
+          gisLayer.format
+        );
+
+        viewer.imageryLayers.add(imageryLayer);
+
+        observer.next(gisLayer);
+        observer.complete();
+      }
+    });
+  }
+
+  private putGisBaseLayer(
+    map: CciGisMap,
+    gisLayer: GisBaseLayer
+  ): Observable<GisBaseLayer> {
+    return new Observable<GisBaseLayer>((observer) => {
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+
+      if (!gisLayer.id) {
+        const imageryLayer =
+          CesiumUrlTemplateImageryLayerFactory.getUrlTemplateImageryLayer(
+            gisLayer.uri
+          );
+
+        viewer.imageryLayers.add(imageryLayer);
+
+        observer.next(
+          new GisBaseLayerBuilder(gisLayer.uri)
+            .withId(imageryLayer.id)
+            .withMetadata(gisLayer.metadata)
+            .build()
+        );
+        observer.complete();
+      } else {
+        for (let i = 0; i < viewer.imageryLayers.length; i++) {
+          const currentImageryLayer = viewer.imageryLayers.get(
+            i
+          ) as CustomImageryLayer;
+
+          if (currentImageryLayer.id == gisLayer.id) {
+            viewer.imageryLayers.remove(currentImageryLayer);
+            break;
+          }
+        }
+
+        const imageryLayer =
+          CesiumUrlTemplateImageryLayerFactory.getUrlTemplateImageryLayer(
+            gisLayer.uri
+          );
+
+        viewer.imageryLayers.add(imageryLayer);
+
+        observer.next(gisLayer);
+        observer.complete();
+      }
+    });
+  }
+
+  private putGisEntityLayer(
+    map: CciGisMap,
+    gisLayer: GisEntityLayer
+  ): Observable<GisEntityLayer> {
+    return new Observable<GisEntityLayer>((observer) => {
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+
+      if (!gisLayer.id) {
+        const dataSource = CesiumCustomDataSourceFactory.getCustomDataSource();
+        viewer.dataSources.add(dataSource).then((addedDataSource) => {
+          observer.next(
+            new GisEntityLayerBuilder([])
+              .withId(addedDataSource.name)
+              .withMetadata(gisLayer.metadata)
+              .build()
+          );
+          observer.complete();
+        });
+      } else {
+        const dataSource = viewer.dataSources.getByName(gisLayer.id)[0];
+        if (!dataSource) {
+          observer.error('Layer attached to other map.');
+        } else {
+          observer.error('Layer already present on map');
+        }
+      }
+    });
+  }
+
+  private putGisGridLayer(
+    map: CciGisMap,
+    gisLayer: GisGridLayer
+  ): Observable<GisGridLayer> {
+    return new Observable<GisGridLayer>((observer) => {
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+
+      if (!gisLayer.id) {
+        const dataSource = CesiumGridDatasourceFactory.getGridDataSource(
+          gisLayer.cells
+        );
+
+        viewer.dataSources.add(dataSource).then((addedDataSource) => {
+          observer.next(
+            new GisGridLayerBuilder(gisLayer.cells)
+              .withId(addedDataSource.name)
+              .withMetadata(gisLayer.metadata)
+              .build()
+          );
+          observer.complete();
+        });
+      } else {
+        const dataSource = viewer.dataSources.getByName(gisLayer.id)[0];
+        if (!dataSource) {
+          observer.error('Layer attached to other map.');
+        } else {
+          observer.error('Layer already present on map');
+        }
+      }
+    });
+  }
+
+  private putGisSymbolLayer(
+    map: CciGisMap,
+    gisLayer: GisSymbolLayer
+  ): Observable<GisSymbolLayer> {
+    return new Observable<GisSymbolLayer>((observer) => {
+      const viewer: Cesium.Viewer = map.getNativeWidget();
+
+      if (!gisLayer.id) {
+        const dataSource = CesiumCustomDataSourceFactory.getCustomDataSource();
+        viewer.dataSources.add(dataSource).then((addedDataSource) => {
+          observer.next(
+            new GisSymbolLayerBuilder([])
+              .withId(addedDataSource.name)
+              .withMetadata(gisLayer.metadata)
+              .build()
+          );
+          observer.complete();
+        });
+      } else {
+        const dataSource = viewer.dataSources.getByName(gisLayer.id)[0];
+        if (!dataSource) {
+          observer.error('Layer attached to other map.');
+        } else {
+          observer.error('Layer already present on map');
+        }
+      }
+    });
+  }
+
+  private putGisSymbolEntity(
+    dataSource: Cesium.DataSource,
+    gisSymbol: GisSymbolEntity
+  ): Observable<GisSymbolEntity> {
+    return new Observable<GisSymbolEntity>((observer) => {
+      if (!gisSymbol.id) {
+        if (!gisSymbol.metadata) {
+          gisSymbol.metadata = {};
+        }
+        const msSymbol = new ms.Symbol(gisSymbol.symbol, { size: 50 });
+        gisSymbol.metadata.image = msSymbol.asSVG();
+        gisSymbol.metadata.imageBase64 =
+          'data:image/svg+xml;base64,' + btoa(msSymbol.asSVG());
+
+        const cesiumEntity = dataSource.entities.add(
+          CesiumSymbolEntityFactory.getSymbolEntity(gisSymbol)
+        );
+
+        observer.next(
+          new GisSymbolEntityBuilder(
+            gisSymbol.longitude,
+            gisSymbol.latitude,
+            gisSymbol.height,
+            gisSymbol.symbol
+          )
+            .withId(cesiumEntity.id)
+            .withMetadata(gisSymbol.metadata)
+            .withStandard(gisSymbol.standard)
+            .build()
+        );
+        observer.complete();
+      } else {
+        const cesiumEntity = dataSource.entities.getById(gisSymbol.id);
+
+        if (cesiumEntity) {
+          cesiumEntity.position =
+            CesiumConstantPositionPropertyFactory.getConstantPositionProperty(
+              gisSymbol.longitude,
+              gisSymbol.latitude,
+              gisSymbol.height
+            );
+
+          cesiumEntity.billboard =
+            CesiumSymbolBillboardGraphicsFactory.getSymbolBillboardGraphics(
+              gisSymbol.symbol
+            );
+          observer.next(gisSymbol);
+          observer.complete();
+        } else {
+          observer.error('Entity not attached to this layer');
+        }
+      }
+    });
+  }
+
+  private putGisDrawEntity(
+    dataSource: Cesium.DataSource,
+    gisDraw: GisDrawEntity
+  ): Observable<GisDrawEntity> {
+    return new Observable<GisDrawEntity>((observer) => {
+      if (!gisDraw.id) {
+        const cesiumEntity = dataSource.entities.add(
+          CesiumDrawEntityFactory.getDrawEntity(gisDraw)
+        );
+
+        observer.next(
+          new GisDrawEntityBuilder(
+            gisDraw.longitude,
+            gisDraw.latitude,
+            gisDraw.height,
+            gisDraw.draw
+          )
+            .withId(cesiumEntity.id)
+            .withMetadata(gisDraw.metadata)
+            .build()
+        );
+        observer.complete();
+      } else {
+        const cesiumEntity = dataSource.entities.getById(gisDraw.id);
+
+        if (cesiumEntity) {
+          cesiumEntity.position =
+            CesiumConstantPositionPropertyFactory.getConstantPositionProperty(
+              gisDraw.longitude,
+              gisDraw.latitude,
+              gisDraw.height
+            );
+
+          cesiumEntity.billboard =
+            CesiumDrawBillBoardGraphicsFactory.getDrawBillboardGraphics(
+              gisDraw.draw
+            );
+          observer.next(gisDraw);
+          observer.complete();
+        } else {
+          observer.error('Entity not attached to this layer');
+        }
+      }
+    });
+  }
+
+  private putGisPointEntity(
+    dataSource: Cesium.DataSource,
+    gisPoint: GisPointEntity
+  ): Observable<GisPointEntity> {
+    return new Observable<GisPointEntity>((observer) => {
+      if (!gisPoint.id) {
+        const cesiumEntity = dataSource.entities.add(
+          CesiumPointEntityFactory.getPointEntity(gisPoint)
+        );
+
+        observer.next(
+          new GisPointEntityBuilder(
+            gisPoint.longitude,
+            gisPoint.latitude,
+            gisPoint.height
+          )
+            .withId(cesiumEntity.id)
+            .withMetadata(gisPoint.metadata)
+            .build()
+        );
+        observer.complete();
+      } else {
+        const cesiumEntity = dataSource.entities.getById(gisPoint.id);
+
+        if (cesiumEntity) {
+          cesiumEntity.position =
+            CesiumConstantPositionPropertyFactory.getConstantPositionProperty(
+              gisPoint.longitude,
+              gisPoint.latitude,
+              gisPoint.height
+            );
+
+          observer.next(gisPoint);
+          observer.complete();
+        } else {
+          observer.error('Entity not attached to this layer');
+        }
+      }
+    });
+  }
+
+  private putGisPolylineEntity(
+    dataSource: Cesium.DataSource,
+    gisPolyline: GisPolylineEntity
+  ): Observable<GisPolylineEntity> {
+    return new Observable<GisPolylineEntity>((observer) => {
+      if (!gisPolyline.id) {
+        const cesiumEntity = dataSource.entities.add(
+          CesiumPolylineEntityFactory.getPolylineEntity(
+            gisPolyline.polylinePoints
+          )
+        );
+
+        observer.next(
+          new GisPolylineEntityBuilder(gisPolyline.polylinePoints)
+            .withId(cesiumEntity.id)
+            .withMetadata(gisPolyline.metadata)
+            .build()
+        );
+        observer.complete();
+      } else {
+        const cesiumEntity = dataSource.entities.getById(gisPolyline.id);
+
+        if (cesiumEntity) {
+          cesiumEntity.polyline!.positions =
+            CesiumConstantPositionsPropertyFactory.getConstantPositionsProperty(
+              gisPolyline.polylinePoints
+            );
+
+          observer.next(gisPolyline);
+          observer.complete();
+        } else {
+          observer.error('Entity not attached to this layer');
+        }
+      }
+    });
+  }
+
+  private putGisShapeEntity(
+    dataSource: Cesium.DataSource,
+    gisShape: GisShapeEntity
+  ): Observable<GisShapeEntity> {
+    return new Observable<GisShapeEntity>((observer) => {
+      if (!gisShape.id) {
+        const cesiumEntity = dataSource.entities.add(
+          CesiumShapeEntityFactory.getShapeEntity(gisShape.shapePoints)
+        );
+
+        observer.next(
+          new GisShapeEntityBuilder(gisShape.shapePoints)
+            .withId(cesiumEntity.id)
+            .withMetadata(gisShape.metadata)
+            .build()
+        );
+        observer.complete();
+      } else {
+        const cesiumEntity = dataSource.entities.getById(gisShape.id);
+
+        if (cesiumEntity) {
+          cesiumEntity.polygon!.hierarchy =
+            CesiumPolygonHierarchyFactory.getPolygonHierarchy(
+              gisShape.shapePoints
+            );
+
+          observer.next(gisShape);
+          observer.complete();
+        } else {
+          observer.error('Entity not attached to this layer');
+        }
+      }
+    });
+  }
+}

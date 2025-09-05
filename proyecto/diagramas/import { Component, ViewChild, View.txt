@@ -1,0 +1,93 @@
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  CciGisMap,
+  CciGisMapFactory,
+  ControlService,
+  GisBaseLayerBuilder,
+  GisEntityLayerBuilder,
+  GisGridLayerBuilder,
+  GisPointEntity,
+  GisPolylineEntity,
+  SymbologyService,
+} from '@c2i/gis-web';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+  @ViewChild('mapContainer', { read: ViewContainerRef, static: true })
+  viewContainerRef!: ViewContainerRef;
+  layerService: any;
+  constructor(
+    private readonly mapFactory: CciGisMapFactory,
+    private symbology: SymbologyService
+  ) {}
+  ngAfterViewInit(): void {
+    const map: CciGisMap = this.mapFactory.createMap(this.viewContainerRef);
+    this.layerService = map.getLayerService();
+    const controlService: ControlService = map.getControlService();
+
+    controlService.centerMap(-4.239292, 40.239748, 1500000);
+
+    this.layerService
+      .addLayer(new GisGridLayerBuilder(15).withName('GRID').build())
+      .subscribe();
+
+    this.layerService
+      .addLayer(
+        new GisBaseLayerBuilder(
+          'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+        )
+          .withName('OSM')
+          .build()
+      )
+      .subscribe();
+
+    // Crear capa vacía
+    const entityLayer = new GisEntityLayerBuilder([])
+      .withMetadata('L11')
+      .withName('L11')
+      .build();
+
+    // Añadir capa al servicio
+    this.layerService.addLayer(entityLayer).subscribe((addedLayer: any) => {
+      // Crear la polilínea
+      const points = [
+        new GisPointEntity(-7, 43, 0),
+        new GisPointEntity(-9.5, 45.2, 0),
+        new GisPointEntity(-6, 47.4, 0),
+        new GisPointEntity(-8, 49.4, 0),
+      ];
+
+      const points2 = [
+        new GisPointEntity(-4, 40, 0),
+        new GisPointEntity(-2.5, 42.2, 0),
+        new GisPointEntity(6, 44.4, 0),
+        new GisPointEntity(9, 65.4, 0),
+      ];
+      const polyline = new GisPolylineEntity(points);
+      const polyline2 = new GisPolylineEntity(points2);
+
+      // Añadir la polilínea al layer
+      this.layerService
+        .addEntity(addedLayer, polyline)
+        .subscribe((addedEntity: any) => {
+          console.log('Polyline added:', addedEntity);
+        });
+      this.layerService
+        .addEntity(addedLayer, polyline2)
+        .subscribe((addedEntity: any) => {
+          console.log('Polyline2 added:', addedEntity);
+        });
+    });
+
+    console.log(this.symbology.getSymbolSVG('SFGPUCI----K---'));
+    console.log(this.symbology.getSymbolMetadata('SFGPUCI----K---'));
+  }
+  getLayers(): void {
+    const layers = this.layerService.getLayers();
+    console.log('Capas actuales:', layers);
+  }
+}

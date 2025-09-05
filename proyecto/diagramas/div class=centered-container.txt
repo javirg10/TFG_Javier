@@ -1,0 +1,59 @@
+<div class="centered-container">
+  <ng-container #mapContainer></ng-container>
+</div>
+
+<button (click)="getLayersFromMap()">Obtener Capas</button>
+
+
+
+
+
+
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  CciGisMap,
+  CciGisMapFactory,
+  ControlService,
+  GisBaseLayer,
+  LayerService,
+} from '@c2i/gis-web';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+  @ViewChild('mapContainer', { read: ViewContainerRef, static: true })
+  viewContainerRef!: ViewContainerRef;
+
+  private map!: CciGisMap;
+  private layerService!: LayerService;
+  private controlService!: ControlService;
+
+  constructor(private readonly mapFactory: CciGisMapFactory) {}
+
+  ngAfterViewInit(): void {
+    this.map = this.mapFactory.createMap(this.viewContainerRef);
+    this.layerService = this.map.getLayerService();
+    this.controlService = this.map.getControlService();
+
+    this.layerService
+      .addLayer(
+        new GisBaseLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png')
+      )
+      .subscribe();
+
+    this.controlService.centerMap(-4.239292, 40.239748, 1500000);
+    console.log('layers (inicio): ', this.layerService.getLayers());
+  }
+
+  getLayersFromMap(): void {
+    const layers = this.layerService.getLayers();
+    console.log('layers (desde botón): ', layers);
+  }
+}
+
+
+
+
